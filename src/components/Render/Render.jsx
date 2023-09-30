@@ -1,14 +1,35 @@
-import './render.css'
+import "./render.css";
+import { useState } from "react";
 
-export default function Render({ title, price, quantity, fnDelete, id, fnRest, fnPlus}) {
-    
+export default function Render({
+  title,
+  price,
+  quantity,
+  fnDelete,
+  id,
+  change,
+  changePrice
+}) {
+  const [qValue, setQValue] = useState(1)
+  const [pValue, setPValue] = useState(price)
   return (
     <>
       <p>
         <button onClick={() => fnDelete(id)}>X</button>
-        {quantity} {title} {price} ${price*quantity}
-        <button onClick={() => fnPlus(id)}>+</button>
-        <button onClick={() => fnRest(id)}>-</button>
+        <input
+          className="input"
+          type="number"
+          value={qValue}
+          onChange={(e) => setQValue(change(e.target.value, id))}
+        />{" "}
+        {title} 
+        <input
+          className="input2"
+          type="number"
+          value={pValue}
+          onChange={(e) => setPValue(changePrice(e.target.value, id))}
+        />
+         ${price * quantity}
       </p>
     </>
   );

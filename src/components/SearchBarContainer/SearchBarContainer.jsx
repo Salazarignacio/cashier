@@ -41,7 +41,7 @@ export default function SearchBarContainer({ data }) {
         fn2={submit}
         product={product}
         cart={cart}
-        reset={reset}
+        setCart={setCart}
       />
     </>
   );

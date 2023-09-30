@@ -15,10 +15,10 @@ export default function UploadContainer() {
 
     try {
       await setDoc(orderDocRef, order);
-      console.log(
-        "Producto agregado con éxito con ID personalizado:",
-        productId
-      );
+      
+      setIdValue("")
+      setTitleValue("")
+      setPriceValue(0)
     } catch (error) {
       console.error("Error al agregar el producto:", error);
     }

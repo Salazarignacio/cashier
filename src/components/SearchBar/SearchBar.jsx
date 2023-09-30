@@ -1,15 +1,27 @@
 import Render from "../render/Render";
 import { useState } from "react";
 
-export default function SearchBar({ value, setValue, fn, fn2, cart, product, reset }) {
+export default function SearchBar({
+  value,
+  setValue,
+  fn,
+  fn2,
+  product,
+  cart,
+  setCart,
+}) {
   const [on, setOn] = useState(true);
+
+  const reset = () => {
+    setCart([]);
+  };
 
   const fnDelete = (id) => {
     const find = cart.find((a) => a.id == id);
     const index = cart.indexOf(find);
     find.quantity = 1;
     cart.splice(index, 1);
-
+    setQuantityValue(1);
     setOn(!on);
   };
 
@@ -18,19 +30,21 @@ export default function SearchBar({ value, setValue, fn, fn2, cart, product, res
     return (count += a.price * a.quantity);
   });
 
-  const rest = (prod) => {
-    const rtaId = cart.find((a) => a.id == prod);
-    if (rtaId.quantity > 1) {
-      rtaId.quantity--;
-    }
-    setOn(!on);
-  };
-  const plus = (prod) => {
-    const rtaId = cart.find((a) => a.id == prod);
+   const change = (e, id)=>{
+    const rtaId = cart.find((a) => a.id == id);
+    console.log(e)
+   rtaId.quantity=e
+    setOn(!on)
+    return (rtaId.quantity)
+  } 
+   const changePrice = (e, id)=>{
+    const rtaId = cart.find((a) => a.id == id);
+    console.log(e)
+   rtaId.price=e
+    setOn(!on)
+    return (rtaId.price)
+  } 
 
-    rtaId.quantity++;
-    setOn(!on);
-  };
   return (
     <>
       <form>
@@ -48,6 +62,7 @@ export default function SearchBar({ value, setValue, fn, fn2, cart, product, res
       </form>
       {cart ? (
         cart.map((a) => {
+          
           return (
             <Render
               key={a.id}
@@ -55,9 +70,9 @@ export default function SearchBar({ value, setValue, fn, fn2, cart, product, res
               price={a.price}
               quantity={a.quantity}
               fnDelete={fnDelete}
-              fnRest={rest}
-              fnPlus={plus}
               id={a.id}
+              change={change}
+              changePrice={changePrice}
             />
           );
         })
